@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A.I. Prompt Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f8f9fa;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        label {
+            font-weight: 600;
+            margin-top: 15px;
+            display: block;
+        }
+        input, select, textarea {
+            width: 100%;
+            margin-top: 6px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #4f46e5;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #3730a3;
+        }
+        #output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #eef2ff;
+            border-radius: 12px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<h1>
+    <img src="JS_LOGO.png" alt="Logo" style="height:30px; vertical-align:middle;">
+    L.L.M. Prompt Builder
+</h1>
+
+<form id="promptForm">
+    <label>Role</label>
+    <select id="role">
+        <option value="expert astrologer">Expert Astrologer</option>
+        <option value="technical writer">Technical Writer</option>
+        <option value="business analyst">Business Analyst</option>
+        <option value="teacher">Teacher</option>
+        <option value="custom">Custom (type below)</option>
+    </select>
+    <input type="text" id="roleCustom" placeholder="Custom role (if selected above)">
+
+    <label>Objective</label>
+    <textarea id="objective" rows="2" placeholder="What do you want the model to do? (e.g., provide prediction, write summary)"></textarea>
+
+    <label>Context</label>
+    <textarea id="context" rows="3" placeholder="Background information (e.g., Vedic astrology, birth chart details)"></textarea>
+
+    <label>Inputs</label>
+    <textarea id="inputs" rows="3" placeholder="Structured data or details (e.g., planetary positions, dataset, text)"></textarea>
+
+    <label>Focus Areas</label>
+    <textarea id="focus" rows="2" placeholder="Specific areas to focus (e.g., marriage, career, remedies)"></textarea>
+
+    <label>Output Format</label>
+    <select id="format">
+        <option value="paragraphs">Paragraphs</option>
+        <option value="bullet points">Bullet Points</option>
+        <option value="table">Table</option>
+        <option value="json">JSON</option>
+        <option value="custom">Custom (type below)</option>
+    </select>
+    <input type="text" id="formatCustom" placeholder="Custom format (if selected above)">
+
+    <label>Tone & Style</label>
+    <select id="tone">
+        <option value="formal">Formal</option>
+        <option value="casual">Casual</option>
+        <option value="traditional Vedic">Traditional Vedic</option>
+        <option value="academic">Academic</option>
+        <option value="custom">Custom (type below)</option>
+    </select>
+    <input type="text" id="toneCustom" placeholder="Custom tone (if selected above)">
+
+    <label>Constraints</label>
+    <textarea id="constraints" rows="2" placeholder="Any limitations (e.g., max 600 words, avoid repetition, no generic statements)"></textarea>
+
+    <button type="button" onclick="generatePrompt()">Generate My Prompt</button>
+</form>
+
+<div id="output"></div>
+
+<script>
+    function generatePrompt() {
+        const role = document.getElementById('role').value === "custom"
+            ? document.getElementById('roleCustom').value
+            : document.getElementById('role').value;
+
+        const format = document.getElementById('format').value === "custom"
+            ? document.getElementById('formatCustom').value
+            : document.getElementById('format').value;
+
+        const tone = document.getElementById('tone').value === "custom"
+            ? document.getElementById('toneCustom').value
+            : document.getElementById('tone').value;
+
+        const prompt = `
+You are a ${role}.
+Your task: ${document.getElementById('objective').value}.
+Context: ${document.getElementById('context').value}.
+Inputs: ${document.getElementById('inputs').value}.
+Focus areas: ${document.getElementById('focus').value}.
+Output format: ${format}.
+Tone & Style: ${tone}.
+Constraints: ${document.getElementById('constraints').value}.
+  `;
+
+        document.getElementById('output').innerText = prompt.trim();
+    }
+</script>
+
+</body>
+</html>
